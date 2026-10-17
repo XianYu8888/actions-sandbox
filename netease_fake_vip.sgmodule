@@ -1,0 +1,8 @@
+#!name=网易云本地VIP伪造
+#!desc=重放VIP响应, 让App以为是VIP (配合换头脚本使用)
+
+[MITM]
+hostname = music.163.com, *.music.163.com
+
+[Script]
+网易云本地VIP = type=http-response,pattern=music-vip-membership/front/vip/info,script-path=https://raw.githubusercontent.com/XianYu8888/actions-sandbox/main/netease_fake_vip.js,requires-body=true
