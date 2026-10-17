@@ -1,0 +1,35 @@
+#!name=网易云SVIP共享(自填Cookie版)
+#!desc=转自暗夜的wyy模块。去广告+换头，Cookie从脚本持久化存储读取: 163_Cookie / 163_User-Agent / 163_MConfig-Info / 163_MUSIC_U
+
+[Rule]
+DOMAIN,iadmat.nosdn.127.net,REJECT
+DOMAIN,iadmatapk.nosdn.127.net,REJECT
+DOMAIN,iadmusicmat.music.126.net,REJECT
+DOMAIN,iadmusicmatvideo.music.126.net,REJECT
+DOMAIN,ipv4.music.163.com,REJECT
+DOMAIN,ipv6.music.163.com,REJECT
+
+[URL Rewrite]
+^https?://interface.*\.music\.163\.com/eapi/ad/get - reject
+^https?://interface.*\.music\.163\.com/eapi/ad/config/get - reject
+^https?://interface.*\.music\.163\.com/eapi/ad/iyunIds - reject
+^https?://interface.*\.music\.163\.com/eapi/ad/prefetch/select - reject
+^https?://interface.*\.music\.163\.com/eapi/ad/loading/current - reject
+
+[Map Local]
+^https?:\/\/interface\d?\.music\.163\.com\/eapi\/(?:delivery\/(batch-)?deliver|moment\/tab\/info\/|yunbei\/account\/entrance\/) data="{}"
+^https?:\/\/interface\d?\.music\.163\.com\/eapi\/(?:ios\/version|mlivestream\/entrance\/playpage\/) data="{}"
+^https?:\/\/interface\d?\.music\.163\.com\/w?e?api\/search\/default data=""
+
+[MITM]
+hostname = music.163.com, *.music.163.com
+
+[Script]
+共享_皮肤 = type=http-request,pattern=playermode,script-path=https://raw.githubusercontent.com/XianYu8888/actions-sandbox/main/netease_shared.js,requires-body=false
+共享_搜索歌曲 = type=http-request,pattern=search/complex|song/list/page,script-path=https://raw.githubusercontent.com/XianYu8888/actions-sandbox/main/netease_shared.js,requires-body=false
+共享_歌曲详情 = type=http-request,pattern=v3/song/detail,script-path=https://raw.githubusercontent.com/XianYu8888/actions-sandbox/main/netease_shared.js,requires-body=false
+共享_播放 = type=http-request,pattern=song/enhance|player/url|song/play,script-path=https://raw.githubusercontent.com/XianYu8888/actions-sandbox/main/netease_shared.js,requires-body=false
+共享_推荐歌曲 = type=http-request,pattern=artist/top/song|recommend/songs,script-path=https://raw.githubusercontent.com/XianYu8888/actions-sandbox/main/netease_shared.js,requires-body=false
+共享_等级 = type=http-request,pattern=newaccountpage,script-path=https://raw.githubusercontent.com/XianYu8888/actions-sandbox/main/netease_shared.js,requires-body=false
+共享_歌单 = type=http-request,pattern=playlist,script-path=https://raw.githubusercontent.com/XianYu8888/actions-sandbox/main/netease_shared.js,requires-body=false
+共享_音质认证 = type=http-request,pattern=vipauth|vip/info|nuser/account,script-path=https://raw.githubusercontent.com/XianYu8888/actions-sandbox/main/netease_shared.js,requires-body=false
