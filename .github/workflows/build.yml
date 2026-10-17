@@ -1,0 +1,50 @@
+name: Build dylib
+
+on:
+  push:
+    paths:
+      - 'src/*.m'
+  workflow_dispatch:
+    inputs:
+      source:
+        description: 'Source file in src/ (e.g. FineProUnlock.m)'
+        required: true
+        default: 'main.m'
+
+jobs:
+  build:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Determine source
+        id: src
+        run: |
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            echo "file=${{ inputs.source }}" >> $GITHUB_OUTPUT
+          else
+            # auto-detect: first .m in src/
+            f=$(ls src/*.m | head -1)
+            echo "file=$(basename $f)" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Build dylib
+        run: |
+          SDK=$(xcrun --sdk iphoneos --show-sdk-path)
+          mkdir -p out
+          clang -dynamiclib -arch arm64 \
+            -mios-version-min=14.0 \
+            -isysroot "$SDK" \
+            -framework Foundation \
+            -framework UIKit \
+            -framework Security \
+            -o "out/${{ steps.src.outputs.file }}.dylib" \
+            "src/${{ steps.src.outputs.file }}"
+          ls -lh out/
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: dylib-${{ steps.src.outputs.file }}
+          path: out/*.dylib
+          retention-days: 7
