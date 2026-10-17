@@ -1,0 +1,8 @@
+#!name=网易云酷我换源
+#!desc=播放接口无URL时自动从酷我取128k MP3替换 (不依赖Cookie池)
+
+[MITM]
+hostname = music.163.com
+
+[Script]
+网易云酷我换源 = type=http-response,pattern=^https://music\.163\.com/api/song/enhance/player/url,script-path=https://raw.githubusercontent.com/XianYu8888/actions-sandbox/main/netease_kuwo.js,requires-body=true
