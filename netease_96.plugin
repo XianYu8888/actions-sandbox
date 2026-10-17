@@ -1,0 +1,19 @@
+#!name=网易云音乐共享会员 (9.6+适配版)
+#!desc=修复新版网易云音乐 9.6+ 接口（兼容 xeapi 路径与 x-music-u 请求头）
+#!author=@伟人 (Fix)
+#!icon=https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Netease_Music.png
+#!date=2024-10-18
+
+[Argument]
+163_Cookie = input, "", tag=163_Cookie, desc=会员Cookie
+163_User-Agent = input, "NeteaseMusic 9.6.09/7516 (iPhone; iOS 27.0.1; zh-Hans_US)", tag=163_User-Agent, desc=客户端User-Agent
+163_MConfig-Info = input, "", tag=163_MConfig-Info, desc=MConfig-Info
+
+[Script]
+# 匹配新版 xeapi 与旧版 eapi 的播放音源与 VIP 权限接口
+http-request ^https?:\/\/interface\d?\.music\.163\.com\/[x]?eapi\/(song\/(enhance\/(player\/)?|privilege\/music\/)url|song\/enhance\/privilege) script-path=ncm_vip.js, tag=播放默认会员歌曲
+# 会员认证接口 (9.6+ 本地VIP判断)
+http-request ^https?:\/\/interface\d?\.music\.163\.com\/[x]?eapi\/(vipauth|music-vip-membership|nuser\/account) script-path=ncm_vip.js, tag=会员认证
+
+[Mitm]
+hostname = interface*.music.163.com
