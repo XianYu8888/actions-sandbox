@@ -11,5 +11,9 @@ $request.headers['User-Agent'] = VIP_UA;
 $request.headers['user-agent'] = VIP_UA;
 $request.headers['MConfig-Info'] = VIP_MCONFIG;
 $request.headers['mconfig-info'] = VIP_MCONFIG;
+// MUSIC_U 单独头也要换 (App 另发 x-music-u)
+const VIP_MUSIC_U = VIP_COOKIE.match(/MUSIC_U=([^;]+)/)[1];
+$request.headers['x-music-u'] = VIP_MUSIC_U;
+$request.headers['X-Music-U'] = VIP_MUSIC_U;
 
 $done({headers: $request.headers});
