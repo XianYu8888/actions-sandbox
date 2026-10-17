@@ -94,9 +94,12 @@ async function fetchKuwoUrl(neteaseId){
     // 从加密的请求body解密拿songId
     let songId=null;
     const body=$request.body||'';
+    console.log('[Kuwo] body len=' + body.length + ', head=' + body.substring(0,80));
     const m=body.match(/params=([0-9a-fA-F]+)/);
+    console.log('[Kuwo] params match=' + !!m);
     if(m){
       const dec=eapiDecrypt(m[1]);
+      console.log('[Kuwo] decrypted head=' + (dec?dec.substring(0,80):'null'));
       if(dec){
         const im=dec.match(/"ids?":"?\[?(\d+)/)||dec.match(/ids.{0,5}(\d{5,})/);
         if(im)songId=im[1];
