@@ -49,6 +49,11 @@ async function fetchKuwoUrl(neteaseId){
       if(bm)songId=bm[1];
     }
     if(!songId){
+      // 尝试从缓存取
+      songId=$persistentStore.read('netease_last_song_id');
+      console.log('[Kuwo] From cache: '+songId);
+    }
+    if(!songId){
       console.log('[Kuwo] No songId, passthrough');
       $done({});
       return;
