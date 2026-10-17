@@ -1,0 +1,10 @@
+#!name=网易云共享会员
+#!desc=转自Loon插件。需在Surge脚本的持久化存储里填: 163_Cookie / 163_User-Agent / 163_MConfig-Info / 163_MUSIC_U
+
+[MITM]
+hostname = music.163.com, *.music.163.com
+
+[Script]
+共享会员_播放相关 = type=http-request,pattern=song/detail|song/enhance|player/url,script-path=https://raw.githubusercontent.com/XianYu8888/actions-sandbox/main/netease_shared.js,requires-body=false
+共享会员_会员认证 = type=http-request,pattern=vipauth|vip/info|nuser/account,script-path=https://raw.githubusercontent.com/XianYu8888/actions-sandbox/main/netease_shared.js,requires-body=false
+共享会员_歌单搜索 = type=http-request,pattern=playlist|search,script-path=https://raw.githubusercontent.com/XianYu8888/actions-sandbox/main/netease_shared.js,requires-body=false
