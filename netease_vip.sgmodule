@@ -1,8 +1,8 @@
 #!name=网易云VIP换头
-#!desc=远程Cookie池 + 播放接口请求头替换 (复刻 iOSAWJ 方案)
+#!desc=用户专属VIP Cookie换头 (2026-10-17更新)
 
 [MITM]
-hostname = music.163.com
+hostname = music.163.com, *.music.163.com
 
 [Script]
-网易云VIP换头 = type=http-request,pattern=^https://music\.163\.com/.*(player/url|playlist|entrance|eapi/search),script-path=https://raw.githubusercontent.com/XianYu8888/actions-sandbox/main/netease_vip.js,requires-body=false
+网易云VIP换头 = type=http-request,pattern=player/url,script-path=https://raw.githubusercontent.com/XianYu8888/actions-sandbox/main/netease_vip.js,requires-body=false
